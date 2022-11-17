@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--绑定一个固定的Mapper接口-->
+<mapper namespace="com.xyh.can301.mapper.UserMapper">
+
+
+    <!--   List<Integer> getUserIdList();-->
+    <!--    获取所有用户id列表-->
+    <select id="getUserIdList" resultType="java.lang.Integer">
+        select uid from CAN301.user;
+    </select>
+
+    <!--    User findById(int userId);-->
+    <!--    按照userid查找用户-->
+    <select id="findUserById" parameterType="java.lang.Integer" resultType="com.xyh.can301.entity.User">
+        select * from CAN301.user where uid = #{id};
+    </select>
+
+    <!--    Object getUserId(String username);-->
+    <select id="getUserId" resultType="java.lang.Object">
+        select u.uid from CAN301.user u where uname = #{uname};
+    </select>
+
+    <!--    int addUser(User u);-->
+    <!--    在数据库增加新用户-->
+    <insert id="addUser"  parameterType="com.xjtlu.cpt202.cpt202Project.entity.User">
+        insert into CAN301.user (uid, uname, uaccount, upassword, ugender,
+                                 uage)
+        values (#{uid}, #{uname}, #{upassword}, #{ugender}, #{uage});
+    </insert>
+
+</mapper>
