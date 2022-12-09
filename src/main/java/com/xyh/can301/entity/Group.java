@@ -3,6 +3,8 @@ package com.xyh.can301.entity;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Data
 public class Group {
 
-    private Integer gid;
+    private String gid;
 
     private String gtag;
 
@@ -24,6 +26,6 @@ public class Group {
 
      private Integer gnownum;
 
-     private Integer gleaderid;
+     private String gleaderid;
 
 }

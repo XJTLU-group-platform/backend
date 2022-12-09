@@ -1,1 +1,20 @@
 
+server:
+  port: 8088
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+  datasource:
+    username: root
+    password: xyh200144
+    url: jdbc:mysql://127.0.0.1/CAN301?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC&MultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  type-aliases-package: com.xyh.can301.entity
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: false

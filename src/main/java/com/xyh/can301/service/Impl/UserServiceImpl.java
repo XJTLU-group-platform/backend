@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,12 +16,12 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
 
-    public long getUid(String uname) {
+    public String getUid(String uname) {
         Object o = userMapper.getUserId(uname);
         if(o == null){
-            return -1;
+            return "null";
         }else {
-            return (long) o;
+            return (String)o;
         }
     }
 
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.addUser(u);
     }
 
-    public String getUserPassword(int id) {
+    public String getUserPassword(String id) {
         if(getUser(id) == null){
             return "null";
         }
@@ -37,8 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(int id) {
-        List<Integer> idList = userMapper.getUserIdList();
+    public User getUser(String id) {
+        List<String> idList = userMapper.getUserIdList();
         if (idList.contains(id)){
             return userMapper.findUserById(id);
         } else {

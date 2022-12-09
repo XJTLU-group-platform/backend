@@ -4,6 +4,79 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--绑定一个固定的Mapper接口-->
 <mapper namespace="com.xyh.can301.mapper.GroupMapper">
-    
+
+
+    <!--    按照gid查找组-->
+    <select id="selectGroupById" parameterType="java.util.UUID" resultType="com.xyh.can301.entity.Group">
+        select * from CAN301.group where gid = #{id};
+    </select>
+
+    <select id="getAllGroup" parameterType="java.util.UUID" resultType="com.xyh.can301.entity.Group">
+        select * from CAN301.group;
+    </select>
+
+    <!--    按照tag查找组-->
+    <select id="selectGroupByTag" parameterType="java.lang.String" resultType="com.xyh.can301.entity.Group">
+        select * from CAN301.group
+        <where>
+            <if test="keyword != null">
+                and gtag regexp #{tag}
+            </if>
+        </where>
+    </select>
+
+    <!--    按照uid查找组-->
+    <select id="selectGroupByUid" parameterType="java.util.UUID" resultType="com.xyh.can301.entity.Group">
+        select * from CAN301.group where gid = (select gid from CAN301.userGroupLink where uid = #{id});
+    </select>
+
+    <!--    在数据库增加新的组-->
+    <insert id="saveGroup">
+        insert into CAN301.group (gid, gtag, gtitle, gdescription, gnumber, gnownum,gleaderid)
+        values (#{gid}, #{gtag}, #{gtitle}, #{gdescription}, #{gnumber}, #{gnownum}, #{gleaderid});
+    </insert>
+
+    <insert id="saveCv">
+        insert into CAN301.userGroupLink (uid, gid, cv) values (#{uid}, #{gid}, #{cv});
+    </insert>
+
+    <update id="joinGroup">
+        update CAN301.Group set gnownum = gnownum + 1 where gid = #{gid};
+    </update>
+
+    <insert id="joinGroup2">
+        insert into CAN301.userGroupLink (uid, `gid`, cv) values (#{uid}, #{gid}, #{cv});
+    </insert>
+
+    <update id="quitGroup">
+        update CAN301.Group set gnownum = gnownum - 1 where gid = #{gid};
+    </update>
+
+    <delete id="quitGroup2">
+        delete from CAN301.userGroupLink where uid = #{uid} and gid = #{gid};
+    </delete>
+
+    <delete id="delGroup">
+        delete from CAN301.userGroupLink where gid = #{gid};
+    </delete>
+
+    <delete id="delGroup2">
+        delete from CAN301.group where gid = #{gid};
+    </delete>
+
+    <select id="getOwnerCv" resultType="java.lang.String">
+        select cv from CAN301.userGroupLink where uid = #{uid} and gid = #{gid};
+    </select>
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>

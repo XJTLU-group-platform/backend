@@ -2,14 +2,16 @@ package com.xyh.can301.service;
 
 import com.xyh.can301.entity.User;
 
+import java.util.UUID;
+
 public interface UserService {
 
-    long getUid(String uname);
+    String getUid(String uname);
 
     int saveUser(User u);
 
-    User getUser(int id);
+    User getUser(String id);
 
-    String getUserPassword(int id);
+    String getUserPassword(String id);
 
 }

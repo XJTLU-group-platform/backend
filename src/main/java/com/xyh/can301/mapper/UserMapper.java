@@ -4,6 +4,7 @@ import com.xyh.can301.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Mapper
@@ -14,7 +15,7 @@ public interface UserMapper {
 
     int addUser(User u);
 
-    List<Integer> getUserIdList();
+    List<String> getUserIdList();
 
-    User findUserById(int id);
+    User findUserById(String id);
 }

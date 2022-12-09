@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -24,10 +25,12 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(@RequestBody String userInfo){
+        System.out.println(userInfo);
         User u = JSON.parseObject(userInfo, User.class);
+        u.setUid(UUID.randomUUID().toString());
         log.info("user to be added: " + u.getUname());
-        if(userService.getUid(u.getUname()) != -1){
-            return JSON.toJSONString(Result.create(300, "username already exists, change another name"));
+        if(!userService.getUid(u.getUname()).equals("null")){
+            return JSON.toJSONString(Result.create(200, "login success", u));
         }
         int success = userService.saveUser(u);
         if (success == 1) {
@@ -45,8 +48,8 @@ public class UserController {
         String password = u.getUpassword();
         log.info("user logging in: " + username);
 
-        int userid = (int)userService.getUid(username);
-        if(userid == -1){
+        String userid = userService.getUid(username);
+        if(!"null".equals(userid)){
             Result result = Result.create(300, "user do not exist");
             log.info("login failed: " + username);
             return JSON.toJSONString(result);
